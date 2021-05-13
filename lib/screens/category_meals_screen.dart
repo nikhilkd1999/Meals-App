@@ -33,7 +33,7 @@ class CategoryMealsScreen extends StatelessWidget {
             return Container(
               padding: EdgeInsets.all(10),
               // child: Text(categoryMealsList[index].title),
-              child: MealItem(title: categoryMealsList[index].title, imageUrl: categoryMealsList[index].imageUrl, affordability: categoryMealsList[index].affordability, complexity: categoryMealsList[index].complexity, duration: categoryMealsList[index].duration),
+              child: MealItem( id: categoryMealsList[index].id,title: categoryMealsList[index].title, imageUrl: categoryMealsList[index].imageUrl, affordability: categoryMealsList[index].affordability, complexity: categoryMealsList[index].complexity, duration: categoryMealsList[index].duration),
             );
           },
           itemCount: categoryMealsList.length,

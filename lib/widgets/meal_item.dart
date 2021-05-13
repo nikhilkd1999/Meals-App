@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/screens/meal_details_screen.dart';
 
 
 
@@ -7,6 +8,7 @@ import 'package:meals_app/models/meal.dart';
 class MealItem extends StatelessWidget {
 
 
+    final String id;
     final String title;
     final String imageUrl;
     final Affordability affordability;
@@ -15,6 +17,7 @@ class MealItem extends StatelessWidget {
 
 
     MealItem({
+      @required this.id,
       @required this.title,
       @required this.imageUrl,
       @required this.affordability,
@@ -23,16 +26,63 @@ class MealItem extends StatelessWidget {
     });
 
 
+    String get getComplexity
+    {
+
+      if( complexity == Complexity.Simple )
+      {
+        return 'Simple';
+      }
+      if( complexity == Complexity.Challenging )
+      {
+        return 'Challenging';
+      }
+      if( complexity == Complexity.Hard )
+      {
+        return 'Hard';
+      }
+
+      return 'Unkonwn';
+    }
+    String get getAffordability
+    {
+
+      if( affordability == Affordability.Affordable )
+      {
+        return 'Affordable';
+      }
+      if( affordability == Affordability.Pricey )
+      {
+        return 'Pricey';
+      }
+      if( affordability == Affordability.Luxurious )
+      {
+        return 'Luxurious';
+      }
+
+      return 'Unkonwn';
+    }
+
+    void selectMeal(BuildContext context)
+    {
+      Navigator.of(context).pushNamed(MealDetailsScreen.routName,arguments: id );
+    }
+
+
 
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
 
-      onTap: (){},
+      onTap: ()=> selectMeal(context),
+
+      splashColor: Theme.of(context).primaryColor,
+      borderRadius: BorderRadius.circular(15),
 
 
       child: Card(
+
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
 
         elevation: 5,
@@ -66,7 +116,47 @@ class MealItem extends StatelessWidget {
 
 
               ],
-            )
+            ),
+
+            Padding(
+              padding: EdgeInsets.all(10),
+            
+              child: Row(
+
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+                children: [
+
+                    Row(
+                      children: [
+                        Icon(Icons.schedule),
+                        SizedBox(width: 5,),
+                        Text('$duration min'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.work),
+                        SizedBox(width: 5,),
+                        Text(getComplexity),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.attach_money),
+                        SizedBox(width: 1,),
+                        Text(getAffordability),
+                      ],
+                    ),
+
+
+                ],
+
+              ),
+            
+            
+            
+            ),
 
 
           ],
