@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/dummy_data.dart';
+import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/widgets/meal_item.dart';
 
-class CategoryMealsScreen extends StatelessWidget {
+class CategoryMealsScreen extends StatefulWidget {
   static const routeName = '/category-meal';
 
   // final String categoryId;
@@ -10,6 +11,15 @@ class CategoryMealsScreen extends StatelessWidget {
 
   // CategoryMealsScreen(this.categoryId,this.title);
 
+  final List<Meal> availableMeals;
+
+  CategoryMealsScreen(this.availableMeals);
+
+  @override
+  _CategoryMealsScreenState createState() => _CategoryMealsScreenState();
+}
+
+class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
   @override
   Widget build(BuildContext context) {
     final routeArgs =
@@ -17,11 +27,9 @@ class CategoryMealsScreen extends StatelessWidget {
 
     final categoryID = routeArgs['id'];
     final categoryTitle = routeArgs['title'];
-    final categoryMealsList = DUMMY_MEALS.where((meal){
-
+    final categoryMealsList = widget.availableMeals.where((meal) {
       return meal.categories.contains(categoryID);
-
-    } ).toList();
+    }).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -33,7 +41,13 @@ class CategoryMealsScreen extends StatelessWidget {
             return Container(
               padding: EdgeInsets.all(10),
               // child: Text(categoryMealsList[index].title),
-              child: MealItem( id: categoryMealsList[index].id,title: categoryMealsList[index].title, imageUrl: categoryMealsList[index].imageUrl, affordability: categoryMealsList[index].affordability, complexity: categoryMealsList[index].complexity, duration: categoryMealsList[index].duration),
+              child: MealItem(
+                  id: categoryMealsList[index].id,
+                  title: categoryMealsList[index].title,
+                  imageUrl: categoryMealsList[index].imageUrl,
+                  affordability: categoryMealsList[index].affordability,
+                  complexity: categoryMealsList[index].complexity,
+                  duration: categoryMealsList[index].duration),
             );
           },
           itemCount: categoryMealsList.length,
